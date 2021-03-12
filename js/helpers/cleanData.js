@@ -40,4 +40,4 @@ function mergeData(trackData, audioFeatureData) {
 	return trackData
 }
 
-export { cleanData, mergeNestedArray }
+module.exports = { cleanData, mergeNestedArray }

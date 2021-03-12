@@ -1,100 +1,123 @@
-// router
-import Router from './router/Router.js'
+// // router
+// const Router = require('./router/Router.js')
 
-// fetch
-import getTracks from './fetch/getTracks.js'
-import getData from './fetch/getData.js'
+// // fetch
+// const getTracks = require('./fetch/getTracks.js')
+// const getData = require('./fetch/getData.js')
 
 // config
-import { url } from './config/api.js'
-import accessIsThere from './helpers/accessIsThere.js'
-import setAccessToken from './helpers/setAccessToken.js'
-import { setLocalStorageItem, removeLocalStorageItem, getLocalStorageItem } from './helpers/localStorage.js'
+const { url } = require('./config/api.js')
+
+
 
 // render
-import renderPlaylists from './render/renderPlaylists.js'
-import renderHome from './render/renderHome.js'
-import renderLoading from './render/renderLoading.js'
-import renderScore from './render/renderScore.js'
+// const renderPlaylists = require('./render/renderPlaylists.js')
+// const renderHome = require('./render/renderHome.js')
+// const renderLoading = require('./render/renderLoading.js')
+// const renderScore = require('./render/renderScore.js')
 
 // helper
-import createBtnEventListeners from './helpers/createBtnEventListeners.js'
-import btnEvent from './helpers/btnEvent.js'
-import { cleanData, mergeNestedArray } from './helpers/cleanData.js'
-import calcScore from './helpers/calcScore.js'
-import recursiveFetch from './fetch/recursiveFetch.js'
-import pushToArray from './helpers/pushToArray.js'
+const login = require('./helpers/login.js')
+// const createBtnEventListeners = require('./helpers/createBtnEventListeners.js')
+// const btnEvent = require('./helpers/btnEvent.js')
+// const { cleanData, mergeNestedArray } = require('./helpers/cleanData.js')
+// const calcScore = require('./helpers/calcScore.js')
+// const recursiveFetch = require('./fetch/recursiveFetch.js')
+// const pushToArray = require('./helpers/pushToArray.js')
+// const accessIsThere = require('./helpers/accessIsThere.js')
+// const setAccessToken = require('./helpers/setAccessToken.js')
+// const { setLocalStorageItem, removeLocalStorageItem, getLocalStorageItem } = require('./helpers/localStorage.js')
 
-function init() {
-	// initialize router
-	const router = new Router({
-		mode: 'hash', 
-		root: '/'
-	})
+// init
+const initPlaylists = require('./init/initPlaylists.js')
+const initCallback = require('./init/initCallback.js')
 
-	// check if access is there ie if there is an access token in the url
-	if(accessIsThere) {
-		setAccessToken()
-		router.navigate('/playlists')
-	}
 
-	router
-		.add(/login/, () => {
-			// replace the url with the api url for logging in
-			window.location.replace(url)
-		})
-		.add(/playlists/, async() => {
-			// get playlists
-			const playlists = await getData('https://api.spotify.com/v1/me/playlists').then(data => {
-				const dataArray = []
-				pushToArray(dataArray, data.items)
-				return recursiveFetch({ 
-					url: data.next,
-					array: dataArray
-				})
-			}).then(data => mergeNestedArray(data))
+const express = require('express')
+const app = new express()
+const port = 5500
 
-			removeLocalStorageItem('href')
-			removeLocalStorageItem('img')
-			removeLocalStorageItem('name')
-			removeLocalStorageItem('danceability_score')
+app.set('view enginge', 'ejs')
 
-			// render the playlists
-			renderPlaylists(playlists)
+app.get('/', (req,res) => console.log('hell'))
+app.get('/login', login)
+app.get('/playlists', initCallback)
 
-			// create eventlisteners for the playlists
-			createBtnEventListeners({
-				eventFunction: btnEvent,
-				selector: 'a'
-			})
-		})
-		.add(/loading/, async() => {
-			// render loading page
-			renderLoading()
+app.listen(port, () => {
+	console.log(`Example app listening at http://localhost:${port}`)
+})
+
+
+// function init() {
+// 	// initialize router
+// 	const router = new Router({
+// 		mode: 'hash', 
+// 		root: '/'
+// 	})
+
+// 	// check if access is there ie if there is an access token in the url
+// 	if(accessIsThere) {
+// 		setAccessToken()
+// 		router.navigate('/playlists')
+// 	}
+
+// 	router
+// 		.add(/login/, () => {
+// 			// replace the url with the api url for logging in
+// 			window.location.replace(url)
+// 		})
+// 		.add(/playlists/, async() => {
+// 			// get playlists
+// 			const playlists = await getData('https://api.spotify.com/v1/me/playlists').then(data => {
+// 				const dataArray = []
+// 				pushToArray(dataArray, data.items)
+// 				return recursiveFetch({ 
+// 					url: data.next,
+// 					array: dataArray
+// 				})
+// 			}).then(data => mergeNestedArray(data))
+
+// 			removeLocalStorageItem('href')
+// 			removeLocalStorageItem('img')
+// 			removeLocalStorageItem('name')
+// 			removeLocalStorageItem('danceability_score')
+
+// 			// render the playlists
+// 			renderPlaylists(playlists)
+
+// 			// create eventlisteners for the playlists
+// 			createBtnEventListeners({
+// 				eventFunction: btnEvent,
+// 				selector: 'a'
+// 			})
+// 		})
+// 		.add(/loading/, async() => {
+// 			// render loading page
+// 			renderLoading()
 			
-			// get tracks
-			const tracks = await getTracks(`${getLocalStorageItem('href')}/tracks?offset=0&limit=100`)
+// 			// get tracks
+// 			const tracks = await getTracks(`${getLocalStorageItem('href')}/tracks?offset=0&limit=100`)
 
-			// clean the track data
-			const cleanTracks = cleanData(tracks.trackData, tracks.audioFeaturesData)
+// 			// clean the track data
+// 			const cleanTracks = cleanData(tracks.trackData, tracks.audioFeaturesData)
 
-			// calc the score from cleaned data
-			const score = calcScore(cleanTracks, 'danceability')
+// 			// calc the score from cleaned data
+// 			const score = calcScore(cleanTracks, 'danceability')
 
-			// save score in local storage
-			setLocalStorageItem('danceability_score', score)
+// 			// save score in local storage
+// 			setLocalStorageItem('danceability_score', score)
 
-			// navigate to /score
-			router.navigate('/score')
-		})
-		.add(/score/, () => {
-			// render the result
-			renderScore()
-		})
-		.add('', () => {
-			// if no path is present, renderhome
-			renderHome()
-		})
-}
+// 			// navigate to /score
+// 			router.navigate('/score')
+// 		})
+// 		.add(/score/, () => {
+// 			// render the result
+// 			renderScore()
+// 		})
+// 		.add('', () => {
+// 			// if no path is present, renderhome
+// 			renderHome()
+// 		})
+// }
 
-init()
+// init()

@@ -1,5 +1,5 @@
-import accessToken from '../helpers/accessToken.js'
-import pushToArray from '../helpers/pushToArray.js'
+// import accessToken from '../helpers/accessToken.js'
+// import pushToArray from '../helpers/pushToArray.js'
 // loop over the fetches if data.next is not null
 async function recursiveFetch({ url, array }) {
 	if(url) {
@@ -20,5 +20,4 @@ async function recursiveFetch({ url, array }) {
 	}
 	return array
 }
-
-export default recursiveFetch
+module.exports = recursiveFetch

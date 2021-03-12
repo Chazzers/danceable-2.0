@@ -1,4 +1,4 @@
-import render from './render.js'
+const render = require('./render.js')
 // render home function
 function renderHome() {
 	render(`
@@ -12,4 +12,4 @@ function renderHome() {
 	`)
 }
 
-export default renderHome
+module.exports = renderHome

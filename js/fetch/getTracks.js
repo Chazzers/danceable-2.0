@@ -1,6 +1,6 @@
-import accessToken from '../helpers/accessToken.js'
-import getData from './getData.js'
-import recursiveFetch from './recursiveFetch.js'
+const accessToken = require('../helpers/accessToken.js')
+const getData = require('./getData.js')
+const recursiveFetch = require('./recursiveFetch.js')
 
 
 // create a url from strings
@@ -61,4 +61,4 @@ async function getTracks(url) {
 	return getTrackData
 }
 
-export default getTracks
+module.exports = getTracks

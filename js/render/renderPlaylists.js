@@ -1,4 +1,4 @@
-import render from './render.js'
+const render = require('./render.js')
 // render playlists
 function renderPlaylists(playlists) {
 	render(`
@@ -21,4 +21,4 @@ function renderPlaylists(playlists) {
 	`)
 }
 
-export default renderPlaylists
+module.exports = renderPlaylists

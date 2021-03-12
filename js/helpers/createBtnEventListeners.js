@@ -4,4 +4,4 @@ function createBtnEventListeners({ eventFunction, selector }) {
 	return buttons.forEach(btn => btn.addEventListener('click', (event) => eventFunction(event)))
 }
 
-export default createBtnEventListeners
+module.exports = createBtnEventListeners

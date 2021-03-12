@@ -26,5 +26,4 @@ function calcStandardDeviation(array, property) {
 	return Math.sqrt(array.map(x => Math.pow(x[property] - average, 2)).reduce((a, b) => a + b) / array.length)
 }
 
-
-export default calcScore
+module.exports = calcScore

@@ -13,7 +13,7 @@ function removeLocalStorageItem(key) {
 	return localStorage.removeItem(key)
 }
 
-export {
+module.exports {
 	setLocalStorageItem,
 	getLocalStorageItem,
 	removeLocalStorageItem

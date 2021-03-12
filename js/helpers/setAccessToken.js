@@ -7,4 +7,4 @@ function setAccessToken() {
 }
 
 
-export default setAccessToken
+module.exports = setAccessToken

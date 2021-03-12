@@ -9,4 +9,4 @@ function btnEvent(event) {
 	setLocalStorageItem('name', name)
 }
 
-export default btnEvent
+module.exports =  btnEvent

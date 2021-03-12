@@ -1,5 +1,5 @@
-import render from './render.js'
-import { getLocalStorageItem } from '../helpers/localStorage.js'
+const render = require('./render.js')
+const { getLocalStorageItem } = require('../helpers/localStorage.js')
 // get playlist and show it
 function renderLoading() {
 	const playlist = {
@@ -27,4 +27,4 @@ function renderLoading() {
 	`)
 }
 
-export default renderLoading
+module.exports = renderLoading

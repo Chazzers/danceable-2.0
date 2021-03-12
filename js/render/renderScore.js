@@ -1,5 +1,5 @@
-import render from './render.js'
-import { getLocalStorageItem } from '../helpers/localStorage.js'
+const render = require('./render.js')
+const { getLocalStorageItem } = require('../helpers/localStorage.js')
 // render score
 function renderScore() {
 	const playlist = {
@@ -26,4 +26,4 @@ function renderScore() {
 	`)
 }
 
-export default renderScore
+module.exports = renderScore
