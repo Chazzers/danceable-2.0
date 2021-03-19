@@ -1,5 +1,6 @@
 // import accessToken from '../helpers/accessToken.js'
 // import pushToArray from '../helpers/pushToArray.js'
+const fetch = require('node-fetch')
 // loop over the fetches if data.next is not null
 async function recursiveFetch({ url, array }) {
 	if(url) {

@@ -1,60 +1,58 @@
 const fetch = require('node-fetch')
-const { 
-	stateKey, 
-	redirectUri,
-	clientId,
-	clientSecret
-} = require('../config/api.js')
+const initPlaylists = require('./initPlaylists')
+const queryString = require('query-string')
 
 async function initCallback(req, res) {
-	const code = req.query.code
-	const state = req.query.state
-	const storedState = req.cookies[stateKey]
+	const code = req.query.code || null
+	const state = req.query.state || null
+	const stateKey = 'spotify_auth_state'
+	const storedState = req.cookies ? req.cookies[stateKey] : null
+	const clientId = process.env.CLIENT_ID
+	const clientSecret = process.env.CLIENT_SECRET
+	const redirectUri = process.env.REDIRECT_URI
 
-	console.log(code)
-	res.clearCookie(stateKey)
+	if(state === null || state !== storedState) {
+		res.redirect('/#' + queryString.stringify({
+			error: 'state_mismatch'
+		}))
+	} else {
+		res.clearCookie(stateKey)
 
-	const data = {
-		code: code,
-		redirect_uri: redirectUri,
-		grant_type: 'authorization_code'
+		const data = {
+			code: code,
+			redirect_uri: redirectUri,
+			grant_type: 'authorization_code'
+		}
+
+		const formData = new URLSearchParams()
+
+		formData.append('code', data.code)
+		formData.append('redirect_uri', data.redirect_uri)
+		formData.append('grant_type', data.grant_type)
+
+		postData('https://accounts.spotify.com/api/token', { data: formData, redirectUri: redirectUri, clientId: clientId, clientSecret: clientSecret })
+			.then(response => {
+				const accessToken = response.access_token
+				const refreshToken = response.refresh_token
+
+				return res.redirect('/playlists#' + queryString
+					.stringify({
+						access_token: accessToken,
+						refresh_token: refreshToken
+					}))
+			})
 	}
-
-	postData('https://accounts.spotify.com/api/token', { data: data, redirectUri: redirectUri, clientId: clientId, clientSecret: clientSecret })
-		.then((err, res, body) => {
-			if(!err && res.statusCode === 200) {
-				const accessToken = body.access_token
-				const refreshToken = body.refresh_token
-
-				const url = 'https://api.spotify.com/v1/me/playlists'
-				const headers = { 
-					'Authorization': 'Bearer ' + accessToken 
-				}
-
-				fetch(url, {
-					headers: headers
-				}).then(data => console.log(data))
-			}
-		})
-
-	
 }
 
-async function postData(url = '', { 
-	data = {}, code, redirectUri, clientId, clientSecret 
-}) {
-	// Default options are marked with *
+
+
+async function postData(url = '', { data = {}, clientId, clientSecret }) {
 	const response = await fetch(url, {
-		method: 'POST', // *GET, POST, PUT, DELETE, etc.
-		form: {
-			code: code,
-			redirectUri: redirectUri,
-			grant_type: 'authorization_code'
-		},
+		method: 'POST', 
 		headers: {
-			'Authorization': 'Basic ' + (Buffer(clientId + ':' + clientSecret).toString('base64'))
+			'Authorization': 'Basic ' + (Buffer.from(clientId + ':' + clientSecret, 'utf8').toString('base64'))
 		},
-		body: JSON.stringify(data) 
+		body: data
 	})
 	return response.json()
 }

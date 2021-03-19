@@ -6,7 +6,7 @@
 // const getData = require('./fetch/getData.js')
 
 // config
-const { url } = require('./config/api.js')
+const { url } = require('./js/config/api.js')
 
 
 
@@ -17,7 +17,7 @@ const { url } = require('./config/api.js')
 // const renderScore = require('./render/renderScore.js')
 
 // helper
-const login = require('./helpers/login.js')
+const login = require('./js/helpers/login.js')
 // const createBtnEventListeners = require('./helpers/createBtnEventListeners.js')
 // const btnEvent = require('./helpers/btnEvent.js')
 // const { cleanData, mergeNestedArray } = require('./helpers/cleanData.js')
@@ -29,23 +29,35 @@ const login = require('./helpers/login.js')
 // const { setLocalStorageItem, removeLocalStorageItem, getLocalStorageItem } = require('./helpers/localStorage.js')
 
 // init
-const initPlaylists = require('./init/initPlaylists.js')
-const initCallback = require('./init/initCallback.js')
+const initPlaylists = require('./js/init/initPlaylists.js')
+const initCallback = require('./js/init/initCallback.js')
 
 
 const express = require('express')
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
+
 const app = new express()
 const port = 5500
 
-app.set('view enginge', 'ejs')
+require('dotenv').config()
 
-app.get('/', (req,res) => console.log('hell'))
-app.get('/login', login)
-app.get('/playlists', initCallback)
+app.set('view engine', 'ejs')
+	.set('views', './views')
 
-app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`)
-})
+	.use(express.static('assets'))
+	.use(cors())
+	.use(cookieParser())
+
+	.get('/', (req,res) => res.render('index'))
+	.get('/login', login)
+	.get('/callback', initCallback)
+	.get('/playlists', initPlaylists)
+
+
+	.listen(port, () => {
+		console.log(`Example app listening at http://localhost:${port}`)
+	})
 
 
 // function init() {

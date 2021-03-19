@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head.ejs') %>
+
+<body>
+	<div id="root">
+		<main class="loading">
+			<a class="playlist">
+				<article>
+					<h3>${playlist.name}</h3>
+					<img src="${playlist.img}" alt="">
+				</article>
+			</a>
+			<div class="loading-animation">
+				<h2>The danceability of your playlist is: </h2>
+				<div class="score">
+					<h1>${playlist.score}<span>/100</span></h1>
+				</div>
+			</div>
+		</main>
+		<a class="btn">Measure another playlist</a>
+	</div>
+</body>
+</html>

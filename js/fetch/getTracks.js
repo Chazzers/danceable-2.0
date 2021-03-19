@@ -1,6 +1,7 @@
 const accessToken = require('../helpers/accessToken.js')
 const getData = require('./getData.js')
 const recursiveFetch = require('./recursiveFetch.js')
+const fetch = require('node-fetch')
 
 
 // create a url from strings
