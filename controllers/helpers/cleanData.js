@@ -1,7 +1,7 @@
 // clean data function that executes the rest of the functions
 function cleanData(trackData, audioFeatureData) {
 	const mergedTrackData = mergeNestedArray(trackData)
-	const mergedAudioFeatureData = mergeNestedArray(audioFeatureData)
+	const mergedAudioFeatureData = mergeNestedArray(audioFeatureData, 'audio_features')
 	const mergedData = mergeData(mergedTrackData, mergedAudioFeatureData)
 	const transformedData = mergedData.map(item => transformData(item))
 	const cleanedData = tidyData(transformedData)
@@ -9,9 +9,9 @@ function cleanData(trackData, audioFeatureData) {
 }
 
 // create one array of nested arrays
-function mergeNestedArray(array) {
-	if(array[0].audio_features) {
-		const newArray = array.map(item => item.audio_features)
+function mergeNestedArray(array, property) {
+	if(property) {
+		const newArray = array.map(item => item[property])
 		return [].concat.apply([], newArray)
 	}
 	return [].concat.apply([], array)

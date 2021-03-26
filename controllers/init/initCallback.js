@@ -1,5 +1,4 @@
 const fetch = require('node-fetch')
-const initPlaylists = require('./initPlaylists')
 const queryString = require('query-string')
 
 async function initCallback(req, res) {
@@ -32,14 +31,17 @@ async function initCallback(req, res) {
 
 		postData('https://accounts.spotify.com/api/token', { data: formData, redirectUri: redirectUri, clientId: clientId, clientSecret: clientSecret })
 			.then(response => {
-				const accessToken = response.access_token
 				const refreshToken = response.refresh_token
 
-				return res.redirect('/playlists#' + queryString
-					.stringify({
-						access_token: accessToken,
-						refresh_token: refreshToken
-					}))
+				const cookieConfig = {
+					httpOnly: true, // to disable accessing cookie via client side js
+					//secure: true, // to force https (if you use it)
+					maxAge: 1000000, // ttl in seconds (remove this option and cookie will die when browser is closed)
+				}
+
+				res.cookie('refresh_token', refreshToken, cookieConfig)
+
+				res.redirect('/playlists')
 			})
 	}
 }

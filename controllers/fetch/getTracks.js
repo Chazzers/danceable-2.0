@@ -1,7 +1,5 @@
-const accessToken = require('../helpers/accessToken.js')
 const getData = require('./getData.js')
 const recursiveFetch = require('./recursiveFetch.js')
-const fetch = require('node-fetch')
 
 
 // create a url from strings
@@ -12,30 +10,26 @@ function createUrl({ baseUrl, query, value }) {
 
 
 // create fetch promises
-function createPromises(array, promise, { baseUrl, query, promiseArray = [] }) {
+function createPromises(array, promise, accessToken, { baseUrl, query, promiseArray = [] }) {
 	array.forEach(item => promiseArray.push(promise(createUrl({
 		baseUrl: baseUrl,
 		query: query,
 		value: item,
-	}))))
+	}), accessToken)))
 	return promiseArray
 }
 
 // get tracks
-async function getTracks(url) {
-	const getTrackData = await fetch(url, {
-		headers: {
-			'Authorization': 'Bearer ' + accessToken
-		}
-	})
-		.then(res => res.json())
-		.then((data, containerArray = [data.items]) =>  
+async function getTracks(url, accessToken) {
+	const getTrackData = await getData(url, accessToken)
+		.then((data, containerArray = [data.items]) =>  {
 			// if data.next exists which is a url for the next 100 items, add it to the container array
-			recursiveFetch({ 
+			return recursiveFetch({ 
 				url: data.next,
-				array: containerArray
+				array: containerArray,
+				accessToken: accessToken
 			})
-		)
+		})
 		.then(trackData => {
 			// create array of id's
 			return {
@@ -52,7 +46,7 @@ async function getTracks(url) {
 		}).then(async({ trackData, audioFeaturesData }) => {
 			return {
 				// make fetch calls out of the url ids of the tracks
-				audioFeaturesData: await Promise.all(createPromises(audioFeaturesData, getData, {
+				audioFeaturesData: await Promise.all(createPromises(audioFeaturesData, getData, accessToken, {
 					baseUrl: 'https://api.spotify.com/v1/audio-features',
 					query: 'ids',
 				})).then(res => res),

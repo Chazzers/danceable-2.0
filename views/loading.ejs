@@ -3,12 +3,13 @@
 <%- include('partials/head.ejs') %>
 
 <body>
+	<%- include('partials/header.ejs') %>
 	<div id="root">
 		<main class="loading">
 			<a class="playlist">
 				<article>
-					<h3>${playlist.name}</h3>
-					<img src="${playlist.img}" alt="">
+					<h3><%= playlist.name %></h3>
+					<img src="<%= playlist.images[0] ? playlist.images[0].url : './assets/images/music-icon.png' %>" alt="">
 				</article>
 			</a>
 			<div class="loading-animation">
@@ -22,5 +23,6 @@
 			</div>
 		</main>
 	</div>
+	<%- include('partials/script.ejs') %>
 </body>
 </html>

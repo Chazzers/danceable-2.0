@@ -1,36 +1,11 @@
-// // router
-// const Router = require('./router/Router.js')
-
-// // fetch
-// const getTracks = require('./fetch/getTracks.js')
-// const getData = require('./fetch/getData.js')
-
-// config
-const { url } = require('./js/config/api.js')
-
-
-
-// render
-// const renderPlaylists = require('./render/renderPlaylists.js')
-// const renderHome = require('./render/renderHome.js')
-// const renderLoading = require('./render/renderLoading.js')
-// const renderScore = require('./render/renderScore.js')
-
 // helper
-const login = require('./js/helpers/login.js')
-// const createBtnEventListeners = require('./helpers/createBtnEventListeners.js')
-// const btnEvent = require('./helpers/btnEvent.js')
-// const { cleanData, mergeNestedArray } = require('./helpers/cleanData.js')
-// const calcScore = require('./helpers/calcScore.js')
-// const recursiveFetch = require('./fetch/recursiveFetch.js')
-// const pushToArray = require('./helpers/pushToArray.js')
-// const accessIsThere = require('./helpers/accessIsThere.js')
-// const setAccessToken = require('./helpers/setAccessToken.js')
-// const { setLocalStorageItem, removeLocalStorageItem, getLocalStorageItem } = require('./helpers/localStorage.js')
+const login = require('./controllers/helpers/login.js')
 
 // init
-const initPlaylists = require('./js/init/initPlaylists.js')
-const initCallback = require('./js/init/initCallback.js')
+const initPlaylists = require('./controllers/init/initPlaylists.js')
+const initCallback = require('./controllers/init/initCallback.js')
+const initScore = require('./controllers/init/initScore.js')
+const initHome = require('./controllers/init/initHome.js')
 
 
 const express = require('express')
@@ -45,15 +20,20 @@ require('dotenv').config()
 app.set('view engine', 'ejs')
 	.set('views', './views')
 
-	.use(express.static('assets'))
+	.use(express.static('public'))
 	.use(cors())
 	.use(cookieParser())
-
-	.get('/', (req,res) => res.render('index'))
+	.use(express.json())
+	.use(express.urlencoded({
+		extended: true
+	}))
+	
+	.get('/', initHome)
 	.get('/login', login)
 	.get('/callback', initCallback)
 	.get('/playlists', initPlaylists)
-
+	.get('/playlists/:id', initScore)
+	.get('/playlists/:id/score', initScore)
 
 	.listen(port, () => {
 		console.log(`Example app listening at http://localhost:${port}`)
