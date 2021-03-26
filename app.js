@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const app = new express()
-const port = 5500
+const port = process.env.NODE_ENV || 5500
 
 require('dotenv').config()
 
