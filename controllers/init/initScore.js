@@ -18,7 +18,7 @@ async function initScore(req, res) {
 		const cleanTracks = cleanData(tracks.trackData, tracks.audioFeaturesData)
 		
 		const score = calcScore(cleanTracks, 'danceability')
-		renderScore(res, score, playlist)
+		renderScore(req, res, score, playlist)
 	} catch(error) {
 		console.log(error)
 	}

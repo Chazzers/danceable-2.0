@@ -1,8 +1,9 @@
 // get playlist and show it
-function renderScore(res, score, playlist) {
+function renderScore(req, res, score, playlist) {
 	res.render('score', {
 		score: score,
-		playlist: playlist
+		playlist: playlist,
+		id: req.params.id
 	})
 }
 

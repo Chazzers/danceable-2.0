@@ -12,7 +12,12 @@
 		<main>
 			<div>
 				<% playlists.forEach(playlist =>{ %> 
-					<a href="/playlists/<%= playlist.id %>" class="playlist" data-href="<%= playlist.href %>" data-name="<%= playlist.name %>" data-img="<%= playlist.images[0] ? playlist.images[0].url : './assets/images/music-icon.png' %>">
+					<a href="/playlists/<%= playlist.id %>" 
+						class="playlist"
+						data-id="<%= playlist.id %>"
+						data-href="<%= playlist.href %>" 
+						data-name="<%= playlist.name %>" 
+						data-img="<%= playlist.images[0] ? playlist.images[0].url : './assets/images/music-icon.png' %>">
 						<article>
 							<h3><%= playlist.name %> </h3>
 							<img src="<%= playlist.images[0] ? playlist.images[0].url : './assets/images/music-icon.png' %>" alt="">
@@ -22,6 +27,6 @@
 			</div>
 		</main>
 	</div>
-	<%- include('partials/script.ejs') %>
+	
 </body>
 </html>

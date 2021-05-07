@@ -21,5 +21,8 @@
 		"quotes": ["error", "single", {
 			"allowTemplateLiterals": true
 		}]
+	}, 
+	"globals": {
+		"clients": "writable"
 	}
 }

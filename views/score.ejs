@@ -6,7 +6,7 @@
 	<%- include('partials/header.ejs') %>
 	<div id="root">
 		<main class="loading">
-			<a class="playlist">
+			<a data-id="<%= playlist.id %>" class="playlist">
 				<article>
 					<h3><%= playlist.name %></h3>
 					<img src="<%= playlist.images[0] ? playlist.images[0].url : './assets/images/music-icon.png' %>" alt="">
@@ -19,8 +19,19 @@
 				</div>
 			</div>
 		</main>
+		<button 
+			data-name="<%= playlist.name %>" 
+			data-img="<%= playlist.images[0] ? playlist.images[0].url : './assets/images/music-icon.png' %>" 
+			data-score="<%= score %>"
+			data-id="<%= id %>"
+			class="btn" 
+			id="favourite-btn" 
+			type="button"
+			>
+			Save in favourites
+		</button>
 		<a class="btn" href="/playlists">Measure another playlist</a>
 	</div>
-	<%- include('partials/script.ejs') %>
+	
 </body>
 </html>
