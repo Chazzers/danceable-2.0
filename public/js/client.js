@@ -22,7 +22,6 @@ if(favouriteBtn) {
 			'/manifest.json',
 			'/sw.js',
 			'/js/client.js',
-			'/js/offline-script.js',
 			'/css/styles.css',
 			`/playlists/${id}`
 		]
