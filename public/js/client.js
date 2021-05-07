@@ -34,10 +34,14 @@ if(favouriteBtn) {
 		favouriteBtn.innerHTML = 'Saved for offline'
 		
 	})
-	if(caches.has(`${id}`)) {
-		favouriteBtn.style.backgroundColor = '#6D6C6C'
-		favouriteBtn.innerHTML = 'Saved for offline'
-	}
+	caches.keys()
+		.then(cache => {
+			console.log(cache.includes(id))
+			if(cache.includes(id)) {
+				favouriteBtn.style.backgroundColor = '#6D6C6C'
+				favouriteBtn.innerHTML = 'Saved for offline'
+			}
+		})
 }
 
 if(allPlaylists && !window.navigator.onLine) {
