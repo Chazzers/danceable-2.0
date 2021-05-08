@@ -2,7 +2,8 @@
 	--primary: #1DB954;
 	--secondary: #222326;
 	--third: #fff;
-	--fourth: #000;
+	--fourth: #000000;
+	--fifth: #14823B;
 	--btn-dimensions: 15rem;
 	--image-dimensions: calc(var(--btn-dimensions) * 1.05);
 }
@@ -208,7 +209,7 @@ h1 span {
     min-width: 160px;
     text-transform: uppercase;
     white-space: normal;
-	background-color: var(--primary);
+	background-color: var(--fifth);
 	text-decoration: none;
 	color: var(--third);
 	font-weight: 700;
