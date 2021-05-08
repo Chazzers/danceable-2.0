@@ -9,7 +9,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "build": "gulp build",
+	"watch": "chokidar 'public/css/styles.css' 'public/js/client.js' 'public/fonts/*.{woff,woff2}' 'public/images/*.{jpg,png,svg}' -c 'npm run build'"
   },
   "repository": {
     "type": "git",
@@ -22,10 +24,17 @@
   },
   "homepage": "https://github.com/Chazzers/web-app-from-scratch-2021#readme",
   "devDependencies": {
+    "chokidar-cli": "^2.1.0",
     "eslint": "^7.20.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-cli": "^2.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2",
     "nodemon": "^2.0.7"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

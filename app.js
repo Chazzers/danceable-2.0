@@ -7,15 +7,15 @@ const initCallback = require('./controllers/init/initCallback.js')
 const initScore = require('./controllers/init/initScore.js')
 const initHome = require('./controllers/init/initHome.js')
 
-
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const compression = require('compression')
+
+require('dotenv').config()
 
 const app = new express()
 const port = process.env.PORT || 5500
-
-require('dotenv').config()
 
 app.set('view engine', 'ejs')
 	.set('views', './views')
@@ -27,6 +27,7 @@ app.set('view engine', 'ejs')
 	.use(express.urlencoded({
 		extended: true
 	}))
+	.use(compression())
 	
 	.get('/', initHome)
 	.get('/login', login)
