@@ -6,7 +6,10 @@ Welcome to the Danceable?! webapp. This webapp will score the danceability of yo
 
 ## Spotify API
 
-This app makes use of the spotify api through the use of the "(implicit grant flow)[https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow]". To make use of this flow you will need an api key (client id) from spotify. With the spotify api you can get user data once they have given permission to do so. You can also use the api to look for songs, playlists, artists and a lot more. Another cool feature of the api is that you can analyse song data. 
+This app makes use of the spotify api through the use of the "(implicit grant flow)[https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow]". To make use of this flow you will need an api key (client id) from spotify. With the spotify api you can get user data once they have given permission to do so. You can also use the api to look for songs, playlists, artists and a lot more. Another cool feature of the api is that you can analyse song data. The spotify API uses oAuth2.0. The flow of using oAuth is best explained through a diagram they have on their website. 
+
+![Spotify api oAuth2.0 flow (image belongs to Spotify and is found on this link: https://developer.spotify.com/documentation/general/guides/authorization-guide/)](https://user-images.githubusercontent.com/33430669/117664552-31028880-b1a2-11eb-8e41-b590200c8250.jpg)
+
 
 ### How it works
 
