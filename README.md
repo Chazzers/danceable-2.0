@@ -23,13 +23,25 @@ Then all the songs' audio features data of the playlist gets fetched.
 
 Afterwards the score will be generated based on the data fetched from the songs' audio-features data.
 
-## Actor diagram
+## Features
 
-![actor-diagram](https://user-images.githubusercontent.com/33430669/109317151-b5549900-784c-11eb-9861-d144adc81e64.jpg)
+### Progressive web-app (You can install this web-application on your phone)
 
-## Interaction diagram
+![image](https://user-images.githubusercontent.com/33430669/117666708-6f994280-b1a4-11eb-9c4f-7ccd41a56d29.png)
+ 
+### Display playlists of your spotify profile
 
-![interaction-diagram](https://user-images.githubusercontent.com/33430669/109317195-c00f2e00-784c-11eb-8ebe-d3f320884aff.jpg)
+![image](https://user-images.githubusercontent.com/33430669/117667061-ca329e80-b1a4-11eb-94fb-08090dcd2ab0.png)
+
+
+### Measure a danceability score from your favorite playlist
+
+![image](https://user-images.githubusercontent.com/33430669/117667093-d7e82400-b1a4-11eb-8f0a-26a0e28cc7c9.png)
+
+
+### You can save a playlist and it's score offline
+
+![image](https://user-images.githubusercontent.com/33430669/117667141-e46c7c80-b1a4-11eb-9b52-c4b77f91db65.png)
 
 ## Resources
 
