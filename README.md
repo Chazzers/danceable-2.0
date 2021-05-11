@@ -42,6 +42,8 @@ Afterwards the score will be generated based on the data fetched from the songs'
 
 ![image](https://user-images.githubusercontent.com/33430669/117667141-e46c7c80-b1a4-11eb-9b52-c4b77f91db65.png)
 
+For saving a playlist offline I used the CacheStorage API together with a serviceworker. Because my data is user data and can be updated quite frequently by the users themselves, I've chosen to make my app **Network first** and fallback to cache. This way the data when there is an internet connection will be up to date, and if not, the data will remain the same as the last time you tried to save it. 
+
 ## Optimizations
 
 To view the score of my website I lighthouse in Google developer tools. At first I saw that my site didn't score well on performance so I added [GulpJS](https://gulpjs.com/) to minify my JavaScript and CSS which decreases the size of my client-side javascript files. A teacher of mine also recommended you add the npm package : [compression](https://www.npmjs.com/package/compression) to the express server. After adding this My website scored high on performance. I also decided to tackle the accessibility issues found by lighthouse. The styleguide of Spotify apparently has accessibility issues where the contrast between the button text color and the button is not high enough. So I picked a darker shade of green for my buttons. 
